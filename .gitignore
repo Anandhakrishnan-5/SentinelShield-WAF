@@ -1,0 +1,5 @@
+venv/
+__pycache__/
+*.pyc
+alerts.db
+logs/security.log

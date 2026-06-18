@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SentinelShield Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f4f6f8;
+        }
+
+        .card {
+            display: inline-block;
+            width: 220px;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+            color: white;
+            font-size: 20px;
+        }
+
+        .blue {
+            background: #007bff;
+        }
+
+        .red {
+            background: #dc3545;
+        }
+
+        .yellow {
+            background: #ffc107;
+            color: black;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background: #343a40;
+            color: white;
+        }
+
+        .high {
+            color: red;
+            font-weight: bold;
+        }
+
+        .medium {
+            color: orange;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>SentinelShield Dashboard</h1>
+    <div class="card blue">
+        Total Attacks<br>
+        {{ total_attacks }}
+    </div>
+
+    <div class="card red">
+        High Severity<br>
+        {{ high_count }}
+    </div>
+
+    <div class="card yellow">
+        Medium Severity<br>
+        {{ medium_count }}
+    </div>
+    <h2>Total Attacks: {{ total_attacks }}</h2>
+    <h2>🔴 High Severity: {{ high_count }}</h2>
+    <h2>🟡 Medium Severity: {{ medium_count }}</h2>
+    <h2>Attack Statistics</h2>
+
+    <ul>
+        {% for attack, count in attack_stats.items() %}
+        <li>{{ attack }} : {{ count }}</li>
+        {% endfor %}
+    </ul>
+
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>IP</th>
+            <th>Attack</th>
+            <th>Severity</th>
+            <th>Timestamp</th>
+        </tr>
+
+        {% for alert in alerts %}
+        <tr>
+            <td>{{ alert[0] }}</td>
+            <td>{{ alert[1] }}</td>
+            <td>{{ alert[2] }}</td>
+            <td>
+
+                {% if alert[3] == "High" %}
+                <span class="high">High</span>
+
+                {% elif alert[3] == "Medium" %}
+                <span class="medium">Medium</span>
+
+                {% endif %}
+
+            </td>
+            <td>{{ alert[4] }}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+</body>
+
+</html>
